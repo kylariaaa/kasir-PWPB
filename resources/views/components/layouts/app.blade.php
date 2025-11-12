@@ -109,9 +109,6 @@
 
                 {{ $slot }}
             </main>
-
-            {{ $slot }}
-        </main>
     </div>
 </body>
 
