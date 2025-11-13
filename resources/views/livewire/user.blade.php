@@ -42,12 +42,12 @@
                                     <td>{{ $pengguna->email }}</td>
                                     <td>{{ $pengguna->peran }}</td>
                                     <td>
-                                        <button wire:click="pilihMenu('edit')"
+                                        <button wire:click="pilihEdit({{ $pengguna->id }})"
                                             class="btn {{ $pilihanMenu == 'edit' ? 'btn-primary' : 'btn-outline-primary' }}">
                                             Edit Pengguna
                                         </button>
 
-                                        <button wire:click="pilihMenu('hapus')"
+                                        <button wire:click="pilihHapus({{ $pengguna->id }})"
                                             class="btn {{ $pilihanMenu == 'hapus' ? 'btn-primary' : 'btn-outline-primary' }}">
                                             Hapus Pengguna
                                         </button>
@@ -106,23 +106,58 @@
                 @elseif($pilihanMenu == 'edit')
                 <div class="card border-primary">
                     <div class="card-header">
-                        Tambah Pengguna
+                        Edit Pengguna
                     </div>
                     <div class="card-body">
-                        test
+                        <form wire:submit='simpanEdit'>
+
+                            <label>Nama</label>
+                            <input type="text" class="form-control" wire:model='nama' />
+                            @error('nama')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+
+                            <label>Email</label>
+                            <input type="email" class="form-control" wire:model='email' />
+                            @error('email')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+
+                            <label>Password</label>
+                            <input type="password" class="form-control" wire:model='password' />
+                            @error('password')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+
+                            <label>Peran</label>
+                            <select class="form-control" wire:model='peran'>
+                                <option>--Pilih Peran--</option>
+                                <option value="kasir">Kasir</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                            @error('nama')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+
+                            <button type="submit" class="btn btn-primary mt-3">Simpan</button>
+                            <button type="submit" wire:click='batal' class="btn btn-secondary mt-3">Batal</button>
+
                     </div>
                 </div>
 
                 @elseif($pilihanMenu == 'hapus')
                 <div class="card border-primary">
                     <div class="card-header">
-                        Tambah Pengguna
+                        Hapus Pengguna
                     </div>
                     <div class="card-body">
-                        test
+                        apakah kamu yakin ingin menghapus pengguna ini ?
+                        <P>Nama: : {{ $penggunaTerpilih->name }}</P>
+                        <button class="btn btn-danger" wire:click='hapus'>Hapus</button>
+                        <button class="btn btn-danger" wire:click='batal'>Batal</button>
+
                     </div>
                 </div>
-
                 @endif
             </div>
         </div>
