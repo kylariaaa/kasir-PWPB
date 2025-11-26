@@ -8,20 +8,27 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up(): void
     {
-        Schema::create('detail_transaksis', function (Blueprint $table) {
+        Schema::create('detil_transaksis', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('transaksi_id')->constrained('transaksis')->onDelete('cascade');
+            $table->foreignId('produk_id')->constrained('produks')->onDelete('cascade');
+            $table->integer('jumlah');
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down(): void
     {
-        Schema::dropIfExists('detail_transaksis');
+        Schema::dropIfExists('detil_transaksis');
     }
 };

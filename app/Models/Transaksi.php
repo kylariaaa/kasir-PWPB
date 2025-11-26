@@ -6,5 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaksi extends Model
 {
-    //
+    protected $fillable = ['kode', 'total', 'status'];
+    public function detailTransaksi()
+    {
+        return $this->hasMany(DetilTransaksi::class);
+    }
 }

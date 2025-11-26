@@ -5,7 +5,7 @@
                 @if(!$transaksiAktif)
                 <button class="btn btn-primary" wire:click="transaksiBaru">Transaksi Baru</button>
                 @else
-                <button class="btn btn-danger" wire:click='BatalTransaksi'>Batalkan Transaksi</button>
+                <button class="btn btn-danger" wire:click='batalTransaksi'>Batalkan Transaksi</button>
                 @endif
                 <button class="btn btn-info" wire:loading>Loading...</button>
             </div>
@@ -16,7 +16,9 @@
                 <div class="card border-primary">
                     <div class="card-body">
                         <h4 class="card-title">No Invoice : {{ $transaksiAktif->kode }}</h4>
-                        <input type="text" class="form-control" placeholder="No Invoice" wire:model.live='kode'>
+                        {{-- Gunakan .debounce.500ms agar tidak terlalu sering memanggil updatedKode saat mengetik --}}
+                        <input type="text" class="form-control" placeholder="No Invoice" wire:model.live.debounce.500ms='kode'>
+
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -37,11 +39,12 @@
                                     <td>{{ $produk->produk->nama }}</td>
                                     <td>{{ number_format($produk->produk->harga, 2, ',', '.') }}</td>
                                     <td>
+                                        {{-- Anda bisa menambahkan tombol untuk mengubah Qty jika diperlukan --}}
                                         {{ $produk->jumlah }}
                                     </td>
                                     <td>{{ number_format($produk->produk->harga * $produk->jumlah, 2, ',', '.') }}</td>
                                     <td>
-                                        <button class="btn btn-danger" wire:click='hapusProduk({{ $produk->id }})'>Hapus</button>
+                                        <button class="btn btn-danger btn-sm" wire:click='hapusProduk({{ $produk->id }})'>Hapus</button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -58,7 +61,7 @@
                         <h4 class="card-title">Total Biaya</h4>
                         <div class="d-flex justify-content-between">
                             <span>Rp.</span>
-                            <span>{{ number_format($totalSemuaBelanja, 2, ',', '.') }}</span>
+                            <span class="fw-bold fs-5">{{ number_format($totalSemuaBelanja, 2, ',', '.') }}</span>
                         </div>
                     </div>
                 </div>
@@ -77,22 +80,23 @@
                         <h4 class="card-title">Kembalian</h4>
                         <div class="d-flex justify-content-between">
                             <span>Rp.</span>
-                            <span>{{ number_format($kembalian, 2, ',', '.') }}</span>
+                            <span class="fw-bold fs-5 text-success">{{ number_format($kembalian, 2, ',', '.') }}</span>
                         </div>
                     </div>
                 </div>
 
                 {{-- Status Pembayaran & Tombol --}}
                 @if($bayar)
-                @if ($kembalian < 0)
-                    <div class="alert alert-danger mt-2" role="alert">
-                    Uang kurang
+                    @if ($kembalian < 0)
+                        <div class="alert alert-danger mt-2" role="alert">
+                            Uang kurang
+                        </div>
+                    @elseif ($kembalian >= 0)
+                        <button class="btn btn-success mt-2 w-100" wire:click='transaksiSelesai' @if ($totalSemuaBelanja <= 0) disabled @endif>Bayar</button>
+                    @endif
+                @endif
             </div>
-            @elseif ($kembalian >= 0)
-            <button class="btn btn-success mt-2 w-100" wire:click='transaksiSelesai'>Bayar</button>
-            @endif
-            @endif
         </div>
+        @endif
     </div>
-</div>
 </div>
