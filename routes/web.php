@@ -9,7 +9,7 @@ use App\Livewire\Produk;
 Use App\Livewire\Transaksi;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();

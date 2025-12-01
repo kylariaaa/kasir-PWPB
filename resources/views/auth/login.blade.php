@@ -1,73 +1,86 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+<div class="d-flex justify-content-center align-items-center"
+    style=" background: #FFFF; padding: 20px;">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+    <div class="d-flex flex-column flex-md-row shadow-lg mx-auto"
+        style="width: 100%; max-width: 900px; background: #fff; border-radius: 18px; overflow: hidden;">
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+        {{-- LEFT SIDE --}}
+        <div class="d-flex flex-column justify-content-center text-white p-5 text-center text-md-start"
+            style="width: 100%; max-width: 45%;
+                   background: linear-gradient(135deg, #4e7eff, #6aa4ff);">
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+            <h2 class="fw-bold" style="font-size: 2rem;">Kasir Digital</h2>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+            <p class="mt-2" style="font-size: .95rem;">
+                Rasakan pengalaman yang baru dengan menggunakan Kasir Digital
+            </p>
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+            <p class="mt-auto pt-4" style="font-size: .8rem; opacity: .8;">
+                © 2025 Kasir Digital
+            </p>
+        </div>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+        {{-- RIGHT SIDE (FORM) --}}
+        <div class="p-5 d-flex flex-column justify-content-center w-100" style="max-width: 55%;">
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
-                </div>
+            <div class="text-center mb-4">
+                <h3 class="fw-bold mb-1">Welcome Back</h3>
+                <p class="text-muted" style="font-size: .9rem;">
+                    Silakan login untuk melanjutkan
+                </p>
             </div>
+
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+
+                {{-- Email --}}
+                <div class="mb-3">
+                    <label for="email" class="form-label fw-semibold">Email</label>
+                    <input id="email" type="email"
+                        class="form-control rounded-3 @error('email') is-invalid @enderror"
+                        name="email" value="{{ old('email') }}" required autofocus
+                        placeholder="Enter your email">
+
+                    @error('email')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                {{-- Password --}}
+                <div class="mb-3">
+                    <label for="password" class="form-label fw-semibold">Password</label>
+                    <input id="password" type="password"
+                        class="form-control rounded-3 @error('password') is-invalid @enderror"
+                        name="password" required placeholder="Enter your password">
+
+                    @error('password')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                {{-- Login Button --}}
+                <button type="submit"
+                    class="btn btn-primary w-100 py-2 rounded-3 fw-semibold"
+                    style="font-size: .95rem;">
+                    Login
+                </button>
+
+                {{-- Forgot Password --}}
+                @if (Route::has('password.request'))
+                <div class="text-center mt-3">
+                    <a href="{{ route('password.request') }}"
+                        class="text-decoration-none" style="font-size: .85rem;">
+                        Forgot password?
+                    </a>
+                </div>
+                @endif
+            </form>
+
         </div>
     </div>
+
 </div>
 @endsection
