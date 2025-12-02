@@ -25,7 +25,7 @@
 <body>
     <div id="app">
 <nav class="navbar navbar-expand-md shadow-sm"
-     style="background: linear-gradient(135deg, #4e73df, #6f9eff);">
+     style="background: linear-gradient(135deg, #00399d, #00113b);">
     <div class="container">
 
         <!-- Brand -->

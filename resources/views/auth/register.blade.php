@@ -79,6 +79,21 @@
                             placeholder="Repeat password">
                     </div>
 
+                    <!-- Peran -->
+                    <div class="mb-4">
+                        <label for="peran" class="form-label fw-semibold">Peran</label>
+                        <select name="peran" id="peran"
+                            class="form-control rounded-3 @error('peran') is-invalid @enderror"
+                            required>
+                            <option value="">-- Pilih Peran --</option>
+                            <option value="kasir">Kasir</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                        @error('peran')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <!-- Button -->
                     <button type="submit"
                         class="btn btn-primary w-100 py-2 rounded-3 fw-semibold mb-3">

@@ -5,66 +5,92 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Kasir Digital') }}</title>
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-
-    <!-- Scripts -->
-    <!-- Latest compiled and minified CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            background: #f5f7fa;
+            font-family: "Nunito", sans-serif;
+        }
+
+        /* Navbar Glass Effect */
+        .nav-glass {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.75) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Navigation Buttons */
+        .menu-btn {
+            border-radius: 12px;
+            font-weight: 600;
+            transition: 0.25s ease;
+        }
+
+        .menu-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Active button */
+        .menu-active {
+            background: #0d6efd;
+            color: #fff !important;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
+        }
+
+        /* Page container */
+        .content-wrapper {
+            margin-top: 25px;
+        }
+    </style>
 </head>
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+
+        <!-- Modern Navbar -->
+        <nav class="navbar navbar-expand-md navbar-light nav-glass sticky-top py-3">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+
+                <a class="navbar-brand fw-bold fs-4" href="{{ url('/home') }}">
+                    {{ config('app.name', 'Kasir Digital') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
 
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
                         @guest
                         @if (Route::has('login'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link fw-semibold" href="{{ route('login') }}">Login</a>
                         </li>
                         @endif
 
                         @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            <a class="nav-link fw-semibold" href="{{ route('register') }}">Register</a>
                         </li>
                         @endif
+
                         @else
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle fw-semibold" href="#" data-bs-toggle="dropdown">
                                 {{ Auth::user()->name }}
                             </a>
 
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu dropdown-menu-end shadow-sm rounded">
                                 <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                    document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Logout
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -75,41 +101,47 @@
                         @endguest
                     </ul>
                 </div>
+
             </div>
         </nav>
 
-        <main class="py-4">
-            <main class="py-4">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <a href="{{ route('home') }}" wire:navigate
-                                class="btn {{ request()->routeIs('home') ? 'btn-primary' : 'btn-outline-primary' }}">
-                                Beranda
-                            </a>
-                            <a href="{{ route('user') }}" wire:navigate
-                                class="btn {{ request()->routeIs('user') ? 'btn-primary' : 'btn-outline-primary' }}">
-                                Pengguna
-                            </a>
-                            <a href="{{ route('produk') }}" wire:navigate
-                                class="btn {{ request()->routeIs('produk') ? 'btn-primary' : 'btn-outline-primary' }}">
-                                Produk
-                            </a>
-                            <a href="{{ route('transaksi') }}" wire:navigate
-                                class="btn {{ request()->routeIs('transaksi') ? 'btn-primary' : 'btn-outline-primary' }}">
-                                Transaksi
-                            </a>
-                            <a href="{{ route('laporan') }}" wire:navigate
-                                class="btn {{ request()->routeIs('laporan') ? 'btn-primary' : 'btn-outline-primary' }}">
-                                Laporan
-                            </a>
-                        </div>
-                    </div>
-                </div>
+        <!-- Navigation Menu -->
+        <main class="content-wrapper">
+            <div class="container mb-4">
+                <div class="d-flex flex-wrap gap-2">
 
+                    <a href="{{ route('home') }}"
+                        class="btn menu-btn {{ request()->routeIs('home') ? 'menu-active' : 'btn-outline-primary' }}">
+                        Beranda
+                    </a>
+
+                    <a href="{{ route('user') }}"
+                        class="btn menu-btn {{ request()->routeIs('user') ? 'menu-active' : 'btn-outline-primary' }}">
+                        Pengguna
+                    </a>
+
+                    <a href="{{ route('produk') }}"
+                        class="btn menu-btn {{ request()->routeIs('produk') ? 'menu-active' : 'btn-outline-primary' }}">
+                        Produk
+                    </a>
+
+                    <a href="{{ route('transaksi') }}"
+                        class="btn menu-btn {{ request()->routeIs('transaksi') ? 'menu-active' : 'btn-outline-primary' }}">
+                        Transaksi
+                    </a>
+
+                    <a href="{{ route('laporan') }}"
+                        class="btn menu-btn {{ request()->routeIs('laporan') ? 'menu-active' : 'btn-outline-primary' }}">
+                        Laporan
+                    </a>
+                </div>
+            </div>
+
+            <div class="container">
                 {{ $slot }}
-            </main>
+            </div>
+        </main>
+
     </div>
 </body>
-
 </html>

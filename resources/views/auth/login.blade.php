@@ -10,7 +10,7 @@
         {{-- LEFT SIDE --}}
         <div class="d-flex flex-column justify-content-center text-white p-5 text-center text-md-start"
             style="width: 100%; max-width: 45%;
-                   background: linear-gradient(135deg, #4e7eff, #6aa4ff);">
+            background: linear-gradient(135deg, #4e7eff, #6aa4ff);">
 
             <h2 class="fw-bold" style="font-size: 2rem;">Kasir Digital</h2>
 

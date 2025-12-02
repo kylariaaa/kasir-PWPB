@@ -29,6 +29,34 @@ class Transaksi extends Component
         $this->transaksiAktif->save();
     }
 
+
+    public function tambahProduk($produkId)
+    {
+        if (!isset($this->transaksiAktif)) {
+            return;
+        }
+
+        $produk = Produk::find($produkId);
+
+        if (!$produk || $produk->stok <= 0) {
+            return;
+        }
+
+        // Cari detail transaksi
+        $detil = DetilTransaksi::firstOrNew([
+            'transaksi_id' => $this->transaksiAktif->id,
+            'produk_id' => $produk->id
+        ]);
+
+        $detil->jumlah += 1;
+        $detil->save();
+
+        // Kurangi stok
+        $produk->stok -= 1;
+        $produk->save();
+    }
+
+
     /**
      * Menghapus produk dari detail transaksi dan mengembalikan stok.
      *
@@ -63,8 +91,10 @@ class Transaksi extends Component
         $this->transaksiAktif->total = $this->totalSemuaBelanja;
         $this->transaksiAktif->status = 'selesai';
         $this->transaksiAktif->save();
-
         $this->reset();
+
+        session()->flash('sukses', 'Pembayaran berhasil diselesaikan.');
+        $this->bayar = null;
     }
 
     /**
